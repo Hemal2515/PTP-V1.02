@@ -17,9 +17,13 @@ public class BallSpawner : MonoBehaviour
     {
         //Spawn colorBall
 
-        StartCoroutine(InstantiateBalls());
+
     }
 
+    private void Awake()
+    {
+        StartCoroutine(InstantiateBalls());
+    }
     public IEnumerator InstantiateBalls()
     {
         for (int i = 0; i < levelInformation.colorBallNumber.Count; i++)
@@ -30,7 +34,7 @@ public class BallSpawner : MonoBehaviour
                 float randomNumber = Random.Range(0.4f, 0.65f);
                 obj.transform.localScale = new Vector3(randomNumber, randomNumber, randomNumber);
                 obj.GetComponent<SpriteRenderer>().color = GameManager.instances.color[Random.Range(0, GameManager.instances.color.Count)];
-                yield return null;
+                yield return new WaitForSeconds(0.03f);
             }
 
         }
@@ -43,7 +47,7 @@ public class BallSpawner : MonoBehaviour
                 GameObject obj = Instantiate(greyBallPrefab, levelInformation.greyBallPosition[k].transform.position, Quaternion.identity, greyBallTransform);
                 float randomNumber = Random.Range(0.4f, 0.65f);
                 obj.transform.localScale = new Vector3(randomNumber, randomNumber, randomNumber);
-                yield return null;
+                yield return new WaitForSeconds(0.03f);
             }
         }
 
@@ -53,7 +57,7 @@ public class BallSpawner : MonoBehaviour
             {
                 Instantiate(bigBallPrefab, levelInformation.bigBallPosition[i].transform.position, Quaternion.identity, ballParent);
 
-                yield return null;
+                yield return new WaitForSeconds(0.03f);
             }
         }
     }

@@ -67,15 +67,14 @@ public class UIManager : MonoBehaviour
     public void BackToMainMenu()
     {
         MainMenu?.Invoke();
-        GameManager.instances.IsGamePaused = true;
         AudioManager.instances.ButtonClick();
         shopCanvas.enabled = false;
         LevelManager.instaces.DestroyLevel();
         LevelManager.instaces.RestartLevel();
         winPanel.SetActive(false);
         failPanel.SetActive(false);
-        //gamePlayCanvas.enabled = false;
         upComingLevelCanvas.enabled = false;
+        GameManager.instances.IsGamePaused = true;
         mainMenuCanvas.enabled = true;
     }
 

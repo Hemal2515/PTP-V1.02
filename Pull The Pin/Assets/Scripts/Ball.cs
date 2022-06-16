@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Ball : MonoBehaviour
 {
+    private float radius = 0.13f;
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.collider.tag == "Bomb")
@@ -18,18 +19,33 @@ public class Ball : MonoBehaviour
         }
 
         //Colorball collides with Greyball, Change the greyball tag and add the ball script in greyball
-        if (collision.collider.tag == "GreyBall")
+        //if (collision.collider.tag == "GreyBall")
+        //{
+        Collider2D[] collider = Physics2D.OverlapCircleAll(transform.position, radius);
+
+        foreach (var hit in collider)
         {
-            AudioManager.instances.SingleBallPop();
-            collision.collider.gameObject.tag = "ColorBall";
-            collision.collider.gameObject.AddComponent<Ball>();
-            collision.collider.GetComponent<SpriteRenderer>().color = GameManager.instances.color[Random.Range(0, GameManager.instances.color.Count)];
+            //hit object than destroy
+            if (hit.tag == "GreyBall")
+            {
+                AudioManager.instances.SingleBallPop();
+                collision.collider.gameObject.tag = "ColorBall";
+                collision.collider.gameObject.AddComponent<Ball>();
+                collision.collider.GetComponent<SpriteRenderer>().color = GameManager.instances.color[Random.Range(0, GameManager.instances.color.Count)];
+            }
+            //}
+
+
             //Shaking();
         }
 
 
 
 
+    }
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(transform.position, radius);
     }
 
 

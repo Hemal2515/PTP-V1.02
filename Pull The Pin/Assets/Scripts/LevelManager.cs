@@ -35,7 +35,7 @@ public class LevelManager : MonoBehaviour
             instaces = this;
         }
         currentLevel = PlayerPrefs.GetInt("CurrentLevel");
-        currentLevel = 11;
+        //currentLevel = 4;
         level = Instantiate(LevelList[currentLevel], this.transform);
     }
 
