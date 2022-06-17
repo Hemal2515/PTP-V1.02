@@ -5,10 +5,10 @@ using UnityEngine.UI;
 
 public class AudioManager : MonoBehaviour
 {
-    public Sprite muteImage;
-    public Sprite SoundImage;
+    public Image muteImage;
+    public Image SoundImage;
     public Button button;
-    public bool IsSoundOn = false;
+    public bool IsSoundOn1 = true;
 
     public static AudioManager instances;
     public AudioSource audioSource;
@@ -33,22 +33,40 @@ public class AudioManager : MonoBehaviour
         {
             instances = this;
         }
+        IsSoundOn1 = PlayerPrefs.GetInt("IsSoundOn") == 1 ? true : false;
+        //Debug.Log(IsSoundOn1);
+        SoundOn(IsSoundOn1);
     }
 
     public void OnButttonClick()
     {
         // Make sound mute or unmute
+
+        SoundOn(IsSoundOn1);
+    }
+
+    public void SoundOn(bool IsSoundOn)
+    {
+
         if (!IsSoundOn)
         {
+            //Debug.Log("SoundOn On");
             audioSource.mute = false;
-            button.image.sprite = SoundImage;
-            IsSoundOn = true;
+            SoundImage.enabled = true;
+            muteImage.enabled = false;
+            IsSoundOn = false;
+            PlayerPrefs.SetInt("IsSoundOn", IsSoundOn ? 1 : 0);
+            IsSoundOn1 = true;
         }
         else
         {
-            IsSoundOn = false;
+            //Debug.Log("SoundOn Off");
             audioSource.mute = true;
-            button.image.sprite = muteImage;
+            SoundImage.enabled = false;
+            muteImage.enabled = true;
+            IsSoundOn = true;
+            PlayerPrefs.SetInt("IsSoundOn", IsSoundOn ? 1 : 0);
+            IsSoundOn1 = false;
         }
     }
 
@@ -95,5 +113,10 @@ public class AudioManager : MonoBehaviour
     {
 
         audioSource.PlayOneShot(audioClip);
+    }
+
+    public void Vibrate()
+    {
+        Handheld.Vibrate();
     }
 }

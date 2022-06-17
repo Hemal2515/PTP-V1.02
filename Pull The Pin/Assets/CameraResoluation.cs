@@ -1,30 +1,46 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using System.Collections;
 
-public class CameraResoluation : MonoBehaviour
+public class Vibrate
 {
-    private Camera mainCamera;
 
-    void Start()
+    public AndroidJavaClass unityPlayer;
+    public AndroidJavaObject currentActivity;
+    public AndroidJavaObject sysService;
+
+
+    public void Vibrate()
     {
-        mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
-        transform.position = new Vector3(mainCamera.transform.position.x, mainCamera.transform.position.y, 0);
-        Vector3 bottomLeft = mainCamera.ViewportToWorldPoint(Vector3.zero) * 100;
-        Vector3 topRight = mainCamera.ViewportToWorldPoint(new Vector3(mainCamera.rect.width, mainCamera.rect.height)) * 100;
-        Vector3 screenSize = topRight - bottomLeft;
-        float screenRatio = screenSize.x / screenSize.y;
-        float desiredRatio = transform.localScale.x / transform.localScale.y;
+        unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
+        currentActivity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
+        sysService = currentActivity.Call<AndroidJavaObject>("getSystemService", "vibrator");
+    }
 
-        if (screenRatio > desiredRatio)
-        {
-            float height = screenSize.y;
-            transform.localScale = new Vector3(height * desiredRatio, height);
-        }
-        else
-        {
-            float width = screenSize.x;
-            transform.localScale = new Vector3(width, width / desiredRatio);
-        }
+    //Functions fromhttps://developer.android.com/reference/android/os/Vibrator.html
+    public void vibrate()
+    {
+        sysService.Call("vibrate");
+    }
+
+
+    public void vibrate(long milliseconds)
+    {
+        sysService.Call("vibrate", milliseconds);
+    }
+
+    public void vibrate(long[] pattern, int repeat)
+    {
+        sysService.Call("vibrate", pattern, repeat);
+    }
+
+
+    public void cancel()
+    {
+        sysService.Call("cancel");
+    }
+
+    public bool hasVibrator()
+    {
+        return sysService.Call<bool>("hasVibrator");
     }
 }

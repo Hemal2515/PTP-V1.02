@@ -1,0 +1,4 @@
+#Fri Jun 17 18:01:08 IST 2022
+base.0=/Users/yudiz/Desktop/Hemal-Git/PTP-V1.02/Pull The Pin/Temp/gradleOut/launcher/build/intermediates/dex/release/mergeDexRelease/classes.dex
+path.0=classes.dex
+renamed.0=classes.dex

@@ -73,6 +73,7 @@ public class UIManager : MonoBehaviour
         LevelManager.instaces.RestartLevel();
         winPanel.SetActive(false);
         failPanel.SetActive(false);
+        gamePlayCanvas.enabled = false;
         upComingLevelCanvas.enabled = false;
         GameManager.instances.IsGamePaused = true;
         mainMenuCanvas.enabled = true;

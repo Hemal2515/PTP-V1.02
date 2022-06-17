@@ -15,6 +15,7 @@ public class BallCount : MonoBehaviour
     private int totalGreyBall = 0;
     private int totalBigBall = 0;
 
+    Vibrate vibrate = new Vibrate();
     public AudioClip groupBallClip;
     private void Start()
     {
